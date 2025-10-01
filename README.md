@@ -8,14 +8,14 @@ Siga os passos abaixo para configurar seu ambiente e utilizar os scripts do proj
 
 **Windows:**
 ```bash
-python -m venv langchain
-langchain\Scripts\activate
+python -m venv .venv
+.venv\Scripts\activate
 ```
 
 **Mac/Linux:**
 ```bash
-python3 -m venv langchain
-source langchain/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
 ### 2. Instalar Dependências
