@@ -7,6 +7,7 @@ load_dotenv()
 num = input("Digite um número: ")
 letra = input("Digite uma letra: ").lower()
 tentativas = 1
+max_tentativas = 10
 
 modelo = "gpt-4o-mini"
 
@@ -33,13 +34,15 @@ llm = ChatOpenAI(
 resposta = llm.invoke(prompt)
 palavra = resposta.content
 resultado = valida_palavra(palavra, num, letra)
+
 if resultado is False:
-    while resultado is False:
-      tentativas += 1
-      prompt2 = template_correcao.format(palavra=palavra, numero=num, letra=letra)
-      resposta = llm.invoke(prompt2)
-      palavra = resposta.content
-      resultado = valida_palavra(palavra, num, letra)
-    print(f"{palavra} - {len(palavra)}\ntentativas: {tentativas}")
+  while resultado is False and tentativas < max_tentativas:
+    tentativas += 1
+    prompt2 = template_correcao.format(palavra=palavra, numero=num, letra=letra)
+    resposta = llm.invoke(prompt2)
+    palavra = resposta.content
+    resultado = valida_palavra(palavra, num, letra)
+if resultado is True:
+  print(f"{palavra} - {len(palavra)}\ntentativas: {tentativas}")
 else:
-    print(f"{palavra} - {len(palavra)}\ntentativas: {tentativas}")
+  print(f"\nFalha! Limite de {max_tentativas} tentativas atingido. Nenhuma palavra válida foi encontrada.")
